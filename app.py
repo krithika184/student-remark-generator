@@ -1,18 +1,21 @@
 import os
 
 import streamlit as st
+from dotenv import load_dotenv
 from google import genai
 from PIL import Image
 
-# Initialize Gemini Client
+# Load environment variables from .env file
+load_dotenv()
 
+# Initialize Gemini Client
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 st.set_page_config(page_title="Automated Student Remark Generator", page_icon="📝")
 
-st.title("📝 Student Remark Generator for Teachers")
+st.title("📝 Student Remark Generator")
 st.write(
-    "Upload an image of the grade sheet to automatically generate end-of-term student remarks."
+    "Upload an image of the grade sheet to automatically generate student remarks."
 )
 
 # File uploader for mark sheet images
@@ -23,7 +26,7 @@ uploaded_file = st.file_uploader(
 if uploaded_file is not None:
     # Display uploaded image preview
     image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Grade Sheet", use_container_width=True)
+    # st.image(image, caption="Uploaded Grade Sheet")
 
     if st.button("Generate Remarks"):
         with st.spinner("Analyzing grade sheet and writing remarks..."):
